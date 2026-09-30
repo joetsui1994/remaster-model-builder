@@ -1,0 +1,5 @@
+origin,destination,rate
+North,Central,2.5
+Central,North,2.5
+Central,South,0.015
+South,Central,0.015

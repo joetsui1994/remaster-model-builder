@@ -1,0 +1,18 @@
+<beast version="2.0" namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="DeterministicTrajectory" maxTime="10">
+        <population id="X" spec="RealParameter" value="1"/>
+        <population id="Y" spec="RealParameter" value="0"/>
+        <samplePopulation id="samp" spec="RealParameter" value="0"/>
+        <reaction spec="Reaction" rate="1.4"> X -> 2X </reaction>
+        <reaction spec="Reaction" rate="0.1"> X -> Y </reaction>
+        <reaction spec="Reaction" rate="0.5"> X -> 0 </reaction>
+        <reaction spec="Reaction" rate="0.5"> Y -> samp </reaction>
+      </trajectory>
+    </simulate>
+    <logger fileName="typed.trees" mode="tree">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

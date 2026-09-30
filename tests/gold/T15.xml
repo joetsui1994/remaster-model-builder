@@ -1,0 +1,19 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="StochasticTrajectory" endsWhen="sample==10">
+        <population id="S" spec="RealParameter" value="999"/>
+        <population id="I" spec="RealParameter" value="1"/>
+        <population id="E" spec="RealParameter" value="0"/>
+        <samplePopulation id="sample" spec="RealParameter" value="0"/>
+        <!-- E has no same-type reactant; labels make the infectious I the parent of E. -->
+        <reaction spec="Reaction" rate="0.1"> S:a + I:b -> E:b + I:b </reaction>
+        <reaction spec="Reaction" rate="0.05"> E -> sample </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" mode="tree" fileName="labelled.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

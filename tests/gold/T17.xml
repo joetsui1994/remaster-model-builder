@@ -1,0 +1,13 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="traj" spec="StochasticTrajectory" maxTime="1" endsWhen="X==120">
+      <population id="X" spec="RealParameter" value="100"/>
+      <!-- Trimolecular 3X -> 4X with rate 0.6 per ordered sequence converted to per-combination rate: 0.6 / 3! = 0.1 -->
+      <reaction spec="Reaction" rate="0.1"> 3X -> 4X </reaction>
+    </simulate>
+    <logger spec="Logger" fileName="trimolecular.traj">
+      <log idref="traj"/>
+    </logger>
+  </run>
+</beast>

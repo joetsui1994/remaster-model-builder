@@ -1,0 +1,14 @@
+<beast version="2.0" namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="StochasticTrajectory" endsWhen="sample==10">
+        <population id="S" spec="RealParameter" value="999"/>
+        <population id="I" spec="RealParameter" value="1"/>
+        <samplePopulation id="sample" spec="RealParameter" value="0"/>
+        <reaction spec="Reaction" rate="0.1"> S:a + I:b -> I:b + I:b </reaction>
+        <reaction spec="Reaction" rate="0.05"> I -> sample </reaction>
+      </trajectory>
+    </simulate>
+    <logger fileName="labelled.trees" mode="tree"><log spec="TypedTreeLogger" tree="@tree"/></logger>
+  </run>
+</beast>

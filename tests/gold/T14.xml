@@ -1,0 +1,26 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster:beast.base.evolution.tree.coalescent">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="CoalescentTrajectory">
+        <population id="North" spec="ConstantPopulation" popSize="100.0"/>
+        <population id="Central" spec="ConstantPopulation" popSize="200.0"/>
+        <population id="South" spec="ConstantPopulation" popSize="150.0"/>
+
+        <!-- Forward demographic i->j rates converted to backward lineage j->i rates Ni*mij/Nj. -->
+        <reaction spec="Reaction" rate="0.01"> Central -> North </reaction>
+        <reaction spec="Reaction" rate="0.04"> North -> Central </reaction>
+        <reaction spec="Reaction" rate="0.02"> South -> Central </reaction>
+        <reaction spec="Reaction" rate="0.01125"> Central -> South </reaction>
+
+        <!-- Sampling 10 lineages in each deme at time 0 -->
+        <reaction spec="PunctualReaction" n="10" times="0"> 0 -> North </reaction>
+        <reaction spec="PunctualReaction" n="10" times="0"> 0 -> Central </reaction>
+        <reaction spec="PunctualReaction" n="10" times="0"> 0 -> South </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" mode="tree" fileName="coalescent_spatial.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

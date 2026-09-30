@@ -1,0 +1,25 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="StochasticTrajectory" endsWhen="sample==10" mustHave="sample==10">
+        <population id="S_A" spec="RealParameter" value="500"/>
+        <population id="I_A" spec="RealParameter" value="1"/>
+        <population id="S_B" spec="RealParameter" value="500"/>
+        <population id="I_B" spec="RealParameter" value="0"/>
+        <samplePopulation id="sample" spec="RealParameter" value="0"/>
+
+        <!-- Commuter transmission: infectious I_A visits B and transmits to S_B without moving -->
+        <reaction spec="Reaction" rate="0.0002"> S_B:a + I_A:b -> I_B:b + I_A:b </reaction>
+        <!-- Within-deme transmission -->
+        <reaction spec="Reaction" rate="0.0003"> S_A:a + I_A:b -> 2I_A:b </reaction>
+        <!-- Sampling -->
+        <reaction spec="Reaction" rate="0.05"> I_A -> sample </reaction>
+        <reaction spec="Reaction" rate="0.05"> I_B -> sample </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" mode="tree" fileName="commuter.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

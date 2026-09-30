@@ -1,0 +1,17 @@
+<beast version="2.0" namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="25">
+    <simulate spec="SimulatedTree" id="tree">
+      <trajectory spec="StochasticTrajectory" id="traj" endsWhen="sample==12" mustHave="sample==12">
+        <population spec="RealParameter" id="X" value="2"/>
+        <samplePopulation spec="RealParameter" id="sample" value="0"/>
+        <reaction spec="Reaction" rate="1.6"> X -> 2X </reaction>
+        <reaction spec="Reaction" rate="0.5"> X -> 0 </reaction>
+        <reaction spec="Reaction" rate="0.2"> X -> sample </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" fileName="serial-bds.traj"><log idref="traj"/></logger>
+    <logger spec="Logger" mode="tree" fileName="serial-bds.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

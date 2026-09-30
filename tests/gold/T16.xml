@@ -1,0 +1,15 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="traj" spec="StochasticTrajectory" maxTime="20" endsWhen="sample==50">
+      <population id="X" spec="RealParameter" value="10"/>
+      <samplePopulation id="sample" spec="RealParameter" value="0"/>
+      <reaction spec="Reaction" rate="2.0"> X -> 2X </reaction>
+      <!-- REPAIRED: added missing sampling reaction and maxTime safeguard to prevent infinite hang -->
+      <reaction spec="Reaction" rate="0.5"> X -> sample </reaction>
+    </simulate>
+    <logger spec="Logger" fileName="gillespie.traj">
+      <log idref="traj"/>
+    </logger>
+  </run>
+</beast>

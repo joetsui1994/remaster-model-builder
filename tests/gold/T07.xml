@@ -1,0 +1,12 @@
+<beast version="2.0" namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="10">
+    <simulate id="traj" spec="StochasticTrajectory" maxTime="50" endsWhen="sample==20" mustHave="X&gt;=1">
+      <population id="X" spec="RealParameter" value="1"/>
+      <samplePopulation id="sample" spec="RealParameter" value="0"/>
+      <reaction spec="Reaction" rate="2"> X -> 2X </reaction>
+      <reaction spec="Reaction" rate="0.5"> X -> 0 </reaction>
+      <reaction spec="Reaction" rate="0.2"> X -> X + sample </reaction>
+    </simulate>
+    <logger fileName="conditioned.traj"><log idref="traj"/></logger>
+  </run>
+</beast>

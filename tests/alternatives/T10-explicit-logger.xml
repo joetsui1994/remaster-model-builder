@@ -1,0 +1,14 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster:beast.base.evolution.tree.coalescent">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="CoalescentTrajectory">
+        <population id="pop" spec="ConstantPopulation" popSize="1.0"/>
+        <reaction spec="PunctualReaction" n="10" times="0"> 0 -> pop </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" mode="tree" fileName="constant-coalescent.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>

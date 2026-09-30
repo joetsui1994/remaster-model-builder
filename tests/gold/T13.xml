@@ -1,0 +1,46 @@
+<beast version="2.0"
+       namespace="beast.base.inference.parameter:beast.base.inference:remaster">
+  <run spec="Simulator" nSims="1">
+    <simulate id="tree" spec="SimulatedTree">
+      <trajectory id="traj" spec="StochasticTrajectory" maxTime="30">
+        <population id="S_North" spec="RealParameter" value="1000"/>
+        <population id="I_North" spec="RealParameter" value="1"/>
+        <population id="R_North" spec="RealParameter" value="0"/>
+        <population id="S_Central" spec="RealParameter" value="2000"/>
+        <population id="I_Central" spec="RealParameter" value="0"/>
+        <population id="R_Central" spec="RealParameter" value="0"/>
+        <population id="S_South" spec="RealParameter" value="1500"/>
+        <population id="I_South" spec="RealParameter" value="0"/>
+        <population id="R_South" spec="RealParameter" value="0"/>
+        <samplePopulation id="sample" spec="RealParameter" value="0"/>
+
+        <reaction spec="Reaction" rate="0.0005"> S_North:a + I_North:b -> 2I_North:b </reaction>
+        <reaction spec="Reaction" rate="0.1"> I_North -> R_North </reaction>
+        <reaction spec="Reaction" rate="0.05"> I_North -> sample </reaction>
+
+        <reaction spec="Reaction" rate="0.0003"> S_Central:a + I_Central:b -> 2I_Central:b </reaction>
+        <reaction spec="Reaction" rate="0.1"> I_Central -> R_Central </reaction>
+        <reaction spec="Reaction" rate="0.05"> I_Central -> sample </reaction>
+
+        <reaction spec="Reaction" rate="0.0004"> S_South:a + I_South:b -> 2I_South:b </reaction>
+        <reaction spec="Reaction" rate="0.1"> I_South -> R_South </reaction>
+        <reaction spec="Reaction" rate="0.05"> I_South -> sample </reaction>
+
+        <reaction spec="Reaction" rate="0.02"> S_North -> S_Central </reaction>
+        <reaction spec="Reaction" rate="0.02"> I_North -> I_Central </reaction>
+        <reaction spec="Reaction" rate="0.02"> S_Central -> S_North </reaction>
+        <reaction spec="Reaction" rate="0.02"> I_Central -> I_North </reaction>
+        <reaction spec="Reaction" rate="0.015"> S_Central -> S_South </reaction>
+        <reaction spec="Reaction" rate="0.015"> I_Central -> I_South </reaction>
+        <reaction spec="Reaction" rate="0.015"> S_South -> S_Central </reaction>
+        <reaction spec="Reaction" rate="0.015"> I_South -> I_Central </reaction>
+      </trajectory>
+    </simulate>
+    <logger spec="Logger" fileName="spatial.traj">
+      <log idref="traj"/>
+    </logger>
+    <logger spec="Logger" mode="tree" fileName="spatial.trees">
+      <log spec="TypedTreeLogger" tree="@tree"/>
+    </logger>
+  </run>
+</beast>
